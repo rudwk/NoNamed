@@ -4,9 +4,6 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
-
-import java.text.CollationElementIterator;
 
 @Getter
 @NoArgsConstructor
@@ -31,6 +28,10 @@ public class Board {
     public Board(String user, String title, String content){
         this.user = user;
         this.title = title;
+        this.content = content;
+    }
+
+    public void update(String content){
         this.content = content;
     }
 }
