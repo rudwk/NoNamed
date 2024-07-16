@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import org.testboard.crudboard_test.domain.board.domain.Board;
 import org.testboard.crudboard_test.domain.board.domain.repository.BoardRepository;
 import org.testboard.crudboard_test.domain.board.presentatino.dto.BoardCreateRequestDto;
-import org.testboard.crudboard_test.domain.board.presentatino.dto.BoardListResponsDto;
-import org.testboard.crudboard_test.domain.board.presentatino.dto.BoardResponsDto;
+import org.testboard.crudboard_test.domain.board.presentatino.dto.BoardListResponseDto;
+import org.testboard.crudboard_test.domain.board.presentatino.dto.BoardResponseDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,7 +23,7 @@ public class BoardService {
     }
 
     @Transactional
-    public Long update(BoardCreateRequestDto requestDto, Long id){
+    public Long update(Long id, BoardCreateRequestDto requestDto){
         Board board = boardRepository.findById(id)
                 .orElseThrow(() ->new IllegalArgumentException("게시글 없음"));
 
@@ -32,15 +32,15 @@ public class BoardService {
     }
 
     @Transactional
-    public BoardResponsDto findById(Long id){
+    public BoardResponseDto searchById(Long id){
         Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("찾지못함"));
-        return new BoardResponsDto(board);
+        return new BoardResponseDto(board);
     }
 
     @Transactional
-    public List<BoardListResponsDto> findAll(){
+    public List<BoardListResponseDto> searchAll(){
         return boardRepository.findAllByOrderByIdDesc().stream()
-                .map(BoardListResponsDto::new)
+                .map(BoardListResponseDto::new)
                 .collect(Collectors.toList());
     }
 
